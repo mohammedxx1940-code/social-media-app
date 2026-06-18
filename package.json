@@ -34,6 +34,7 @@
     "@angular/ssr": "^20.3.14",
     "@ctrl/ngx-emoji-mart": "^9.3.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
+    "@netlify/angular-runtime": "^3.0.1",
     "@tailwindcss/postcss": "^4.2.1",
     "express": "^5.1.0",
     "flowbite": "^4.0.1",
