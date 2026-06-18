@@ -1,0 +1,10 @@
+<section>
+  <app-create-post></app-create-post>
+  <div class="grid gap-3 mt-5">
+    @for (item of posts; track $index) {
+        <app-post-card [post]="item" (deleted)="removePost($event)">
+            <span class="text-xl">{{$index + 1}}</span>
+        </app-post-card>
+    }
+  </div>
+</section>

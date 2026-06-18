@@ -1,0 +1,65 @@
+<div class="bg-green-50 p-4 rounded space-y-2">
+  <div class="flex justify-between items-center relative">
+    <div class="flex gap-2 items-center">
+      <img
+        [src]="comment?.commentCreator?.photo || '/images/person.jpg'"
+        [alt]="comment?.commentCreator?.username"
+        class="size-12 object-cover rounded-full"
+      />
+      <p class="font-bold">{{ comment?.commentCreator?.name }}</p>
+      <p class="text-green-500">{{ comment?.createdAt }}</p>
+    </div>
+    <i
+      class="fa-solid fa-ellipsis-vertical text-green-500 text-xl hover:text-green-700 cursor-pointer"
+      (click)="isHidden1=!isHidden1"
+    ></i>
+      <div
+        class="absolute -top-26 end-0 grid gap-2 bg-green-200 p-2 rounded-2xl border-2
+         border-green-500" [class.hidden]="isHidden1" #dv
+      >
+        <span class="text-xl cursor-pointer hover:bg-green-500 hover:text-white p-2 rounded" 
+        (click)="deleteComment(comment?._id!); getHide(dv);">
+          <i class="fa-solid fa-trash"></i> Delete</span
+        >
+        <span
+          class="text-xsm cursor-pointer hover:bg-green-500 hover:text-white p-2 rounded"
+          (click)="getShow(upd , dv);"
+        >
+          <i class="fa-solid fa-pen-nib"></i> Update</span
+        >
+      </div>  
+  </div>
+  <p class="text-gray-500">{{ comment?.content }}</p>
+  <form
+    class="bg-green-50 flex gap-4 items-center hidden"
+    #upd
+    [formGroup]="updateCommentForm"
+    (ngSubmit)="updateComment(comment?._id!)"
+  >
+    <div class="relative w-full">
+      <input
+        type="text"
+        id="content"
+        name="content"
+        formControlName="content"
+        class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base border-1 border-green-500 appearance-none focus:outline-none focus:ring-0 focus:border-green-500 peer invalid:border-red-500"
+        placeholder=" "
+        autocomplete="off"
+      />
+      <label
+        for="content"
+        class="inline-flex items-center absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-green-50 px-2 peer-focus:px-2 peer-focus:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+      >
+        <i class="fa-solid fa-comment me-1.5"></i>
+        Update comment
+      </label>
+    </div>
+    <button
+      type="submit"
+      class="text-green-500 cursor-pointer hover:text-green-700"
+      (click)="getHide(upd)"
+    >
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </form>
+</div>

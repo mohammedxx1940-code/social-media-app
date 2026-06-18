@@ -1,0 +1,31 @@
+<div class="space-y-4">
+@for (item of notifications(); track $index) {
+ <div class="bg-white rounded-lg p-3">
+  <div class="flex justify-between relative">
+    <a>
+      <div class="flex gap-2 items-center">
+        <img
+          [src]="item.recipient.photo || '/images/bg-img.jpg'"
+          class="size-12 rounded-full"
+        />
+        <div class="font-bold text-xl space-y-2">
+          <p>{{item.recipient.name}}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <hr class="text-green-500 my-5">
+  <p class="text-[17px] mb-4">
+    {{item.entity.body}}
+  </p>
+  <img
+    [src]="item.entity.image  || '/images/bg-img.jpg'"
+    class="w-full max-h-96 object-cover"
+  />
+  <div class="text-2xl grid gap-4 text-center my-3 text-green-500 font-body">
+    <span>{{item.entity.sharesCount}} shares</span>
+    <span>{{item.entity.likesCount}} likes</span>
+  </div>
+ </div>
+}
+</div>

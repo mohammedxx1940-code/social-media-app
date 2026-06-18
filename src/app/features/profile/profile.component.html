@@ -1,0 +1,60 @@
+<article>
+  <header class="min-h-screen relative bg-cover bg-center md:bg-fixed flex items-center ps-30 pb-16">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-0">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="text-center lg:text-start grid gap-3">
+          <h2 class="text-5xl lg:text-6xl font-bold text-black">
+            My 
+            <br>
+            <span class="text-green-500">Profile</span>
+            <br>
+            Page
+          </h2>
+          <p class="text-xl text-black mb-6 md:mb-8">
+            Your profile page is your first digital interface, summarizing your identity, whether you're 
+            showcasing your personal skills or your company's corporate identity. It aims to build trust 
+            and make a strong first impression on clients or employers by highlighting your achievements,
+             values, and work history.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
+            <button class="bg-green-500 text-white px-6 sm:px-8 py-3 rounded-lg font-bold text-2xl
+            hover:bg-green-700/80 transition-all cursor-pointer translate-y-4">
+              Back To Home
+            </button>
+            <a class="border-2 border-green-500 bg-white text-green-500 px-6 sm:px-8 py-3 rounded-lg font-bold text-2xl
+            hover:bg-green-700/80 transition-all cursor-pointer translate-y-4" fragment="posts"
+             routerLink=".">
+              Go To Posts
+            </a> 
+          </div>
+        </div>
+        <div class="relative mt-8 lg:mt-0">
+          <div class="bg-linear-to-r from-green-500 via-green-500 to-green-300 p-1 rounded-2xl">
+            <img [src]="userData?.photo || '/images/person.jpg'" [alt]="userData?.name"  
+            class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-xl"> 
+          </div>
+          <div class="absolute -bottom-4 -start-4 sm:-bottom-6 sm:-start-6 bg-red-500 text-white
+           border-2 border-white p-4 sm:p-6 rounded-lg shadow-xl">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <i class="fa-solid fa-user text-lg sm:text-xl"></i>
+              <div>
+                <p class="text-yellow-300 text-lg">{{userData?.username}}</p>
+                <p class="text-xl">{{userData?.name}}</p>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </header>
+</article>
+<article>
+  <app-create-post></app-create-post>
+  <div class="grid gap-3 mt-5" id="posts"> 
+    @for (item of posts; track $index) {
+        <app-post-card [post]="item">
+            <span class="text-xl">{{$index + 1}}</span>
+        </app-post-card>
+    }
+  </div>
+</article>

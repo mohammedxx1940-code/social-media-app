@@ -1,0 +1,317 @@
+<section class="grid lg:grid-cols-2 text-white">
+  <app-aside-page></app-aside-page>
+  <aside class="bg-green-100 min-h-screen py-2 flex justify-center items-center">
+    <form
+      (ngSubmit)="registerNow()"
+      [formGroup]="registerForm"
+      class="w-full bg-white max-w-lg p-8 rounded-2xl text-green-500 grid gap-y-5"
+      style="box-shadow: 0px 0px 5px 5px green"
+    >
+      <header class="text-center space-y-2">
+        <h2 class="text-black text-3xl font-bold">Sign up</h2>
+        <p class="text-black">
+          Already have an account?
+          <a
+            routerLink="/auth/login"
+            class="text-green-500 no-underline hover:underline hover:decoration-solid
+             hover:decoration-green-600"
+            >Sign in</a
+          >
+        </p>
+      </header>
+      <div
+        class="text-black text-sm relative text-center after:w-1/3 after:h-px after:bg-linear-to-r 
+        after:from-transparent after:via-green-500 after:to-transparent after:absolute after:end-0 
+        after:top-1/2 after:-translate-y-1/2 before:w-1/3 before:h-px before:bg-linear-to-r 
+        before:from-transparent before:via-green-500 before:to-transparent before:absolute 
+        before:start-0 before:top-1/2 before:-translate-y-1/2"
+      >
+        Create account
+      </div>
+      @if (errorMsg) {
+          <p class="p-5 bg-red-500 text-white my-3.5">{{ errorMsg }}</p>
+      }
+      <div class="relative">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          formControlName="name"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+          border-1 border-green-500 appearance-none focus:outline-none focus:ring-0
+           focus:border-green-500 peer invalid:border-red-500"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <label
+          for="name"
+          class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+          -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+           peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+           peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
+           peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+           rtl:peer-focus:left-auto start-1"
+        >
+          <i class="fa fa-user me-1.5"></i>
+          Full Name
+        </label>
+      </div>
+      @if (nameController?.errors && nameController?.touched) {
+    <app-alert>
+      <ul>
+        @if (nameController?.hasError('required')) {
+          <li>Name is required</li>
+        }
+        @if (nameController?.hasError('minlength')) {
+          <li>must be at lest 5 chars</li>
+        }
+      </ul>
+    </app-alert>
+   }
+      <div class="relative">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          formControlName="username"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+          border-1 border-green-500 appearance-none focus:outline-none focus:ring-0 
+          focus:border-green-500 peer invalid:border-red-500"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <label
+          for="username"
+          class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+          -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+           peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+           peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
+           peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+           rtl:peer-focus:left-auto start-1"
+        >
+          <i class="fa fa-user me-1.5"></i>
+          User Name
+        </label>
+      </div>
+      <div class="relative">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          formControlName="email"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+          border-1 border-green-500 appearance-none focus:outline-none focus:ring-0
+           focus:border-green-500 peer invalid:border-red-500"
+          placeholder=" "
+          autocomplete="off"
+        />
+        <label
+          for="email"
+          class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+          -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+           peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+           peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
+           peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+           rtl:peer-focus:left-auto start-1"
+        >
+          <i class="fa-solid fa-envelope me-1.5"></i>
+          Email
+        </label>
+      </div>
+      @if (emailController?.errors && emailController?.touched) {
+    <app-alert>
+      <ul>
+        @if (emailController?.hasError('required')) {
+          <li>Email is required</li>
+        }
+        @if (emailController?.hasError('email')) {
+          <li>Email is Invalid</li>
+        }
+      </ul>
+    </app-alert>
+   }
+      <div class="relative">
+        <i
+          class="fa-solid absolute end-5 top-1/2 -translate-1/2 active:scale-[.7] transition-all 
+          duration-300"
+          (click)="
+            password.type == 'text'
+              ? password.setAttribute('type', 'password')
+              : password.setAttribute('type', 'text')
+          "
+          [class]="password.type == 'text' ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          formControlName="password"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+          border-1 border-green-500 appearance-none focus:outline-none focus:ring-0
+           focus:border-green-500 peer invalid:border-red-500"
+          placeholder=" "
+          autocomplete="off"
+          #password
+        />
+        <label
+          for="password"
+          class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+          -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+           peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+           peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2
+            peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+            rtl:peer-focus:left-auto start-1"
+        >
+          <i class="fa-solid fa-lock me-1.5"></i>
+          Password
+        </label>
+      </div>
+      @if (passwordController?.errors != null && passwordController?.touched) {
+      <app-alert>
+      <ul>
+        @if (passwordController?.hasError('required')) {
+          <li>Password is required</li>
+        }
+        @if (passwordController?.hasError('pattern')) {
+          <li>Pattern Error !!!!</li>
+          <li>actualValue {{passwordController?.errors?.['pattern']?.['actualValue']}}</li>
+        }
+      </ul>
+    </app-alert>
+   }
+      <div class="relative">
+        <i
+          class="fa-solid absolute end-5 top-1/2 -translate-1/2 active:scale-[.7] transition-all 
+          duration-300"
+          (click)="
+            rePassword.type == 'text'
+              ? rePassword.setAttribute('type', 'password')
+              : rePassword.setAttribute('type', 'text')
+          "
+          [class]="rePassword.type == 'text' ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
+        <input
+          type="password"
+          id="rePassword"
+          name="rePassword"
+          formControlName="rePassword"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base
+           border-1 border-green-500 appearance-none focus:outline-none focus:ring-0
+            focus:border-green-500 peer invalid:border-red-500"
+          placeholder=" "
+          autocomplete="off"
+          #rePassword
+        />
+        <label
+          for="rePassword"
+          class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+          -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+           peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+           peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+           peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+           rtl:peer-focus:left-auto start-1"
+        >
+          <i class="fa-solid fa-lock me-1.5"></i>
+          RePassword
+        </label>
+      </div>
+      @if (rePasswordController?.errors != null && rePasswordController?.touched) {
+    <app-alert>
+      <ul>
+        @if (rePasswordController?.hasError('required')) {
+          <li>RePassword is required</li>
+        }
+        @if (rePasswordController?.hasError('mismatch')) {
+          <li>rePassword not equal password</li>
+          <li>password {{rePasswordController?.errors?.['password']}}</li>
+          <li>rePassword {{rePasswordController?.errors?.['rePassword']}}</li>
+        }
+      </ul>
+    </app-alert>
+   }
+      <div class="grid grid-cols-2 gap-3">
+        <div class="relative">
+          <input
+            type="date"
+            id="dateOfBirth"
+            name="dateOfBirth"
+            formControlName="dateOfBirth"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+            border-1 border-green-500 appearance-none focus:outline-none focus:ring-0
+             focus:border-green-500 peer invalid:border-red-500"
+            placeholder=" "
+          />
+          <label
+            for="dateOfBirth"
+            class="inline-flex items-center absolute text-sm text-green-500 duration-300 
+            transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 
+            peer-focus:px-2 peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+            peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+            peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 
+            rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+            <i class="fa-solid fa-calendar me-1.5"></i>
+            Date of birth
+          </label>
+        </div>
+        @if (dateOfBirthController?.errors && dateOfBirthController?.touched) {
+    <app-alert>
+      <ul>
+        @if (dateOfBirthController?.hasError('required')) {
+          <li>Date of Birth is required</li>
+        }
+      </ul>
+    </app-alert>
+   }
+        <div class="relative">
+          <select
+            id="gender"
+            name="gender"
+            formControlName="gender"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base 
+            border-1 border-green-500 appearance-none focus:outline-none focus:ring-0 
+            focus:border-green-500 peer invalid:border-red-500"
+            placeholder=" "
+          >
+            <option value="" disabled selected hidden>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <label
+            for="gender"
+            class="inline-flex items-center absolute text-sm text-green-500 duration-300 transform 
+            -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-neutral-primary px-2 peer-focus:px-2
+             peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+             peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
+             peer-focus:scale-75 peer-focus:-translate-y-4 
+             rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+            <i class="fa fa-venus-mars me-1.5"></i>
+            Select gender
+          </label>
+        </div>
+      </div>
+      @if (genderController?.errors && genderController?.touched) {
+    <app-alert>
+      <ul>
+        @if (genderController?.hasError('required')) {
+          <li>Gender is required</li>
+        }
+      </ul>
+    </app-alert>
+   }
+      <button
+        type="submit"
+        [disabled]="isLoading"
+        class="bg-green-500 py-2 cursor-pointer rounded text-white hover:bg-green-700
+         disabled:text-black disabled:bg-gray-500 disabled:cursor-not-allowed text-2xl"
+      >
+        @if (isLoading) {
+          Creating your account <i class="fa fa-spinner fa-pin"></i>
+        } @else {
+          Register
+        }
+      </button>
+    </form>
+  </aside>
+</section>

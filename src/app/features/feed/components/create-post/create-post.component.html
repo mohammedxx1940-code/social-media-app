@@ -1,0 +1,72 @@
+<form [formGroup]="createPostForm" (ngSubmit)="createPost(form)" #form
+ class="bg-white rounded p-3 shadow-sm flex flex-col gap-3">
+  <div class="flex items-center gap-2">
+    <img
+      src="/images/person.jpg"
+      alt="Person"
+      class="h-12 rounded-full border-2 border-green-500"
+    />
+    <div>
+      <p class="font-bold text-lg">Mohammed Hussein</p>
+      <label for="countries" class="block mb-2.5 text-sm font-medium text-green-500"
+        >Select an privacy</label
+      >
+      <select
+        formControlName="privacy"
+        id="privacy"
+        name="privacy"
+        class="block w-full px-3 py-2.5 bg-green-200 border border-green-500 text-black 
+        text-sm rounded-base focus:ring-green-500 focus:border-green-700 shadow-xs
+         placeholder:text-body cursor-pointer"
+      >
+        <option selected>Choose a privacy</option>
+        <option value="public">Public</option>
+      </select>
+    </div>
+  </div>
+  <label for="message" class="block mb-2.5 text-xl font-medium text-heading">Write Post</label>
+  <textarea
+    formControlName="body"
+    id="body"
+    name="body"
+    rows="4"
+    class="bg-neutral-secondary-medium border border-green-500
+     text-black text-xl rounded-base focus:ring-green-500 focus:border-green-700 
+     block w-full p-3.5 shadow-xs placeholder:text-body resize-none"
+    placeholder="Write your post...."
+  ></textarea>
+  <hr class="text-green-500" />
+  @if (selectedImage && imgSrc) {
+    <div class="relative">
+        <span class="bg-red-500 text-white absolute end-5 top-5 cursor-pointer
+        hover:bg-red-700 px-1 rounded" (click)="removeImg()">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
+        <img [src]="imgSrc" alt="Image Source" class="w-full h-[300px] object-cover">
+    </div>
+  }
+  <div class="flex justify-between">
+    <div class="flex items-center gap-4">
+      <label class="block mb-2.5 text-xl font-medium text-green-500 hover:text-green-800 
+      cursor-pointer" for="image"><i class="fa-solid fa-images"></i> Photo/Video</label
+      >
+      <input
+        class="cursor-pointer bg-neutral-secondary-medium border
+         border-default-medium text-heading text-sm rounded-base
+          focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+        id="image"
+        type="file"
+        hidden
+        (change)="handleImageChange($event)"
+      />
+      <button class="mb-2.5 text-xl font-medium text-green-500 hover:text-green-800 
+      cursor-pointer" (click)="showEmoji=!showEmoji"><i class="fa-regular fa-face-frown"></i> Emoji</button
+      >
+      @if(showEmoji){
+         <emoji-mart (emojiSelect)="handleEmojiSelect($event)"
+         [style]="{ position: 'absolute', bottom: '-50px', right: '20px' }"></emoji-mart>
+      } 
+    </div>
+    <button class="btn-green" type="submit">Create post</button>
+  </div>
+</form>

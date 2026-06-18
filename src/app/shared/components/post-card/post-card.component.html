@@ -1,0 +1,131 @@
+<div class="bg-white rounded p-4 space-y-4">
+  @if(isEditing){
+    <form [formGroup]="editPostForm" (ngSubmit)="updatePost()">
+      <textarea
+        formControlName="body"
+        id="body"
+        name="body"
+        rows="4"
+        class="bg-neutral-secondary-medium border border-green-500
+        text-black text-xl rounded-base focus:ring-green-500 focus:border-green-700 
+        block w-full p-3.5 shadow-xs placeholder:text-body resize-none"
+        placeholder="Update your post...."
+       ></textarea>
+       <div class="flex gap-3 mt-2">
+        <button class="bg-green-500 text-white px-4 py-2 rounded text-2xl
+        hover:bg-green-700" type="submit">
+          Save
+        </button>
+        <button class="bg-red-500 text-white px-4 py-2 rounded text-2xl
+        hover:bg-red-700" type="button" (click)="isEditing=false">
+          Save
+        </button>
+       </div>
+    </form>
+  }
+  <div class="flex justify-between relative">
+    <a href="">
+      <div class="flex gap-2">
+        <img
+          [src]="post?.user?.photo || '/images/person.jpg'"
+          [alt]="post?.user?.name"
+          class="size-12 rounded-full"
+        />
+        <div class="font-bold text-xl space-y-2">
+          <p>{{ post?.user?.name }}</p>
+          <p class="text-green-500 mb-4">{{ post?.createdAt }}</p>
+          <a [routerLink]="`/main/post-detail/${post?._id}`" class="bg-green-500 text-white
+           hover:bg-green-700 rounded-2xl text-xl cursor-pointer p-2">Post detail</a>
+        </div>
+      </div>
+    </a>
+    <div
+      class="absolute -top-30 end-0 grid gap-2 bg-green-200 p-2 rounded-2xl border-2 border-green-500"
+      [class.hidden]="isHidden"
+    >
+      <span class="text-xl cursor-pointer hover:bg-green-500 hover:text-white p-2 rounded"
+      (click)="deletePost()">
+        <i class="fa-solid fa-trash"></i> Delete</span
+      >
+      <span class="text-xsm cursor-pointer hover:bg-green-500 hover:text-white p-2 rounded"
+      (click)="startEdit()">
+        <i class="fa-solid fa-pen-nib"></i> Update</span
+      >
+    </div>
+    <i
+      class="fa-solid fa-ellipsis-vertical text-green-500 text-xl hover:text-green-700 cursor-pointer"
+      (click)="isHidden = !isHidden"
+    ></i>
+  </div>
+  <hr class="text-green-500 my-5">
+  <p class="text-[17px] mb-4">
+    {{ post?.body }}
+  </p>
+  <img
+    [src]="post?.image || '/images/bg-img.jpg'"
+    [alt]="post?.user?.name"
+    class="w-full max-h-96 object-cover"
+  />
+  <div class="flex justify-between items-center">
+    <button
+    (click)="getComments()"
+    class="text-green-500 bg-green-200 p-2 rounded hover:bg-green-300 cursor-pointer"
+  >
+    Show Comments {{ post?.commentsCount }} <i class="fa-solid fa-arrow-down-long"></i>
+  </button>
+  <div class="flex gap-4 text-green-500">
+    <span>
+      @if(isHidden1){
+        <i class="fa-solid fa-heart hover:text-green-700 cursor-pointer" 
+        (click)="isHidden1=!isHidden1"></i>
+      }@else{
+        <i class="fa-solid fa-heart text-red-500 hover:text-red-700 cursor-pointer"
+         (click)="isHidden1=!isHidden1"></i>
+      }
+       {{post?.likesCount}} likes</span>     
+    <span><i class="fa-solid fa-comment"></i> {{post?.commentsCount}} comments</span> 
+    <span>
+      <i class="fa-solid fa-share cursor-pointer" [class]="isHidden2 ? style1 : style2" 
+      (click)="isHidden2=!isHidden2"></i> {{post?.sharesCount}} shares</span>
+  </div>
+  </div>
+  <div class="grid gap-3">
+    @for (item of comments; track $index) { 
+      <app-comment-card [comment]="item"></app-comment-card>
+    } 
+  </div>
+  <form
+    [formGroup]="createCommentForm"
+    (ngSubmit)="createComment()"
+    class="bg-green-50 p-4 flex gap-4 items-center"
+  >
+    <div class="relative w-full">
+      <input
+        type="text"
+        id="content"
+        name="content"
+        formControlName="content"
+        class="block px-2.5 pb-2.5 pt-4 w-full text-xl text-heading bg-transparent rounded-base border-1
+         border-green-500 appearance-none focus:outline-none focus:ring-0 focus:border-green-500 
+         peer invalid:border-red-500"
+        placeholder=" "
+        autocomplete="off"
+      />
+      <label
+        for="content"
+        class="inline-flex items-center absolute text-sm text-body duration-300 transform 
+        -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-green-50 px-2 peer-focus:px-2
+         peer-focus:text-green-500 peer-placeholder-shown:scale-100 
+         peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2
+          peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+          rtl:peer-focus:left-auto start-1"
+      >
+        <i class="fa-solid fa-comment me-1.5"></i>
+        Write comment
+      </label>
+    </div>
+    <button type="submit" class="text-green-500 cursor-pointer hover:text-green-700">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </form>
+</div>

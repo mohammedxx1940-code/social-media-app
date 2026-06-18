@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+@import '@ctrl/ngx-emoji-mart/picker';
+@import 'ngx-toastr/toastr';
+@layer components{
+    .btn-green{
+        @apply text-white bg-green-500 border-2 border-green-200 rounded-base text-xl 
+        cursor-pointer p-2 hover:bg-green-700;
+    }
+}
